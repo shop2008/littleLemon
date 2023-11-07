@@ -8,8 +8,8 @@ from datetime import datetime
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
-from rest_framework import generics
-from .serializers import MenuSerializer
+from rest_framework import generics,viewsets
+from .serializers import MenuSerializer,BookingSerializer
 
 
 # Create your views here.
@@ -70,6 +70,10 @@ def bookings(request):
     booking_json = serializers.serialize('json', bookings)
 
     return HttpResponse(booking_json, content_type='application/json')
+
+class BookingViewSet(viewsets.ModelViewSet):
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
 
 class MenuItemsView(generics.ListCreateAPIView):
     queryset = Menu.objects.all()
